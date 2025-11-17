@@ -1,25 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Your Cart</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Your Cart — SHOPPING APP{% endblock %}
 
-<div class="top-banner">SHOPPING APP</div>
+{% block content %}
+<div class="container">
+  <h2 class="section-title">Your Cart</h2>
 
-<div class="cart-container">
-    <h2>Your Cart</h2>
+  {% if items %}
+    <div class="cart-container">
+      {% for item in items %}
+        <div class="cart-item">
+          <div class="cart-item-left">
+            <div class="mini-placeholder"></div>
+            <div class="cart-item-info">
+              <div class="cart-item-name">{{ item.name }}</div>
+              <div class="cart-item-price">₹{{ item.price }}</div>
+            </div>
+          </div>
+          <div class="cart-item-actions">
+            <form action="{{ url_for('remove_item', index=loop.index0) }}" method="POST">
+              <button class="btn outline">Remove</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
 
-    {% for item in items %}
-    <div class="cart-item">
-        <span>{{ item.name }}</span>
-        <span>₹{{ item.price }}</span>
+      <div class="cart-summary">
+        <div>Total: <span class="total-price">₹{{ total }}</span></div>
+
+        <div class="cart-buttons">
+          <form action="{{ url_for('clear_cart') }}" method="POST" style="display:inline;">
+            <button class="btn outline">Clear Cart</button>
+          </form>
+          <button class="btn">Checkout</button>
+        </div>
+      </div>
     </div>
-    {% endfor %}
 
-    <div class="cart-total">Total: ₹{{ total }}</div>
+  {% else %}
+    <div class="empty-cart">
+      <p>Your cart is empty.</p>
+      <a class="btn" href="{{ url_for('home') }}">Continue Shopping</a>
+    </div>
+  {% endif %}
 </div>
-
-</body>
-</html>
+{% endblock %}
