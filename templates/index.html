@@ -1,60 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title >SHOPPING APP</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
 
-<div class="top-banner" style="text-align:center">SHOPPING APP</div>
+{% block title %}Home — SHOPPING APP{% endblock %}
 
-<header class="header">
-    <input type="text" placeholder="Search for products..." class="search-box">
-    <button class="cart-btn" onclick="location.href='/cart'">Cart 🛒</button>
-</header>
+{% block content %}
+<div class="container">
+  <h2 class="section-title">Trending Products</h2>
 
-<nav class="category-bar" style="text-align:center">
-    <span>Women</span>
-    <span>Men</span>
-    <span>Electronics</span>
-    <span>Beauty</span>
-    <span>Home</span>
-    <span>Sports</span>
-</nav>
-
-<h2 class="section-title" style="text-align:center;">Trending Products</h2>
-
-<div class="product-grid">
-
-    <div class="product-card">
+  <div class="product-grid">
+    {% for p in products %}
+      <div class="card">
         <div class="placeholder"></div>
-        <h3>Trendy Kurti</h3>
-        <p class="price">₹399</p>
-        <a class="btn" href="/product/Trendy Kurti/399">View Details</a>
-    </div>
+        <h3 class="prod-title">{{ p.name }}</h3>
+        <p class="price">₹{{ p.price }}</p>
+        <div class="card-actions">
+          <a class="btn outline" href="{{ url_for('product_detail', pid=p.id) }}">View</a>
 
-    <div class="product-card">
-        <div class="placeholder"></div>
-        <h3>Smart Watch</h3>
-        <p class="price">₹1499</p>
-        <a class="btn" href="/product/Smart Watch/1499">View Details</a>
-    </div>
-
-    <div class="product-card">
-        <div class="placeholder"></div>
-        <h3>Bluetooth Earbuds</h3>
-        <p class="price">₹799</p>
-        <a class="btn" href="/product/Bluetooth Earbuds/799">View Details</a>
-    </div>
-
-    <div class="product-card">
-        <div class="placeholder"></div>
-        <h3>Home Decor Lamp</h3>
-        <p class="price">₹699</p>
-        <a class="btn" href="/product/Home Decor Lamp/699">View Details</a>
-    </div>
-
+          <form action="{{ url_for('add_to_cart') }}" method="POST" class="inline-form">
+            <input type="hidden" name="product_id" value="{{ p.id }}">
+            <button class="btn">Add to Cart</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
-
-</body>
-</html>
+{% endblock %}
