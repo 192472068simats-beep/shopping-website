@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}SHOPPING APP{% endblock %}</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- main css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand" onclick="location.href='{{ url_for('home') }}'">SHOPPING APP</div>
+      <div class="search">
+        <form action="{{ url_for('home') }}" method="get">
+          <input type="text" name="q" placeholder="Search for products..." />
+        </form>
+      </div>
+      <div class="cart-link">
+        <a href="{{ url_for('cart') }}">Cart ({{ session.get('cart')|length if session.get('cart') else 0 }})</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="category-bar">
+    <div class="category-inner">
+      <span>Women</span>
+      <span>Men</span>
+      <span>Electronics</span>
+      <span>Home</span>
+      <span>Beauty</span>
+      <span>Sports</span>
+    </div>
+  </nav>
+
+  <main class="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    © 2025 SHOPPING APP 
+  </footer>
+
+</body>
+</html>
