@@ -1,28 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ name }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}{{ product.name }} — SHOPPING APP{% endblock %}
 
-<div class="top-banner">SHOPPING APP</div>
+{% block content %}
+<div class="container">
+  <div class="product-container">
+    <div class="product-left">
+      <div class="large-placeholder"></div>
+    </div>
+    <div class="product-right">
+      <h2>{{ product.name }}</h2>
+      <p class="price-large">₹{{ product.price }}</p>
+      <p class="prod-desc">{{ product.desc }}</p>
 
-<div class="product-container">
-    <div class="large-placeholder"></div>
-
-    <h2>{{ name }}</h2>
-    <h3 style="color:#8e3cff;">₹{{ price }}</h3>
-
-    <p>This is a high-quality product with great features and attractive design.</p>
-
-    <form action="/add_to_cart" method="POST">
-        <input type="hidden" name="name" value="{{ name }}">
-        <input type="hidden" name="price" value="{{ price }}">
-        <button class="btn">Add to Cart</button>
-    </form>
-
+      <form action="{{ url_for('add_to_cart') }}" method="POST">
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <button class="btn btn-large">Add to Cart</button>
+      </form>
+    </div>
+  </div>
 </div>
-
-</body>
-</html>
+{% endblock %}
