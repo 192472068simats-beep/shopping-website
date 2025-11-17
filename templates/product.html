@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="top-banner">SHOPPING APP</div>
+
+<div class="product-container">
+    <div class="large-placeholder"></div>
+
+    <h2>{{ name }}</h2>
+    <h3 style="color:#8e3cff;">₹{{ price }}</h3>
+
+    <p>This is a high-quality product with great features and attractive design.</p>
+
+    <form action="/add_to_cart" method="POST">
+        <input type="hidden" name="name" value="{{ name }}">
+        <input type="hidden" name="price" value="{{ price }}">
+        <button class="btn">Add to Cart</button>
+    </form>
+
+</div>
+
+</body>
+</html>
